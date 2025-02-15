@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Facts!</title>
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0; /* Light mode background */
+            color: #333; /* Light mode text color */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Light/Dark Mode */
+        body.dark-mode {
+            background-color: #333;
+            color: #f0f0f0;
+        }
+
+        /* Toggle Switch */
+        .toggle-container {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin-bottom: 20px;
+        }
+
+        .toggle-container input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-container label {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 34px;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-container label:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-container input:checked + label {
+            background-color: #2196F3;
+        }
+
+        .toggle-container input:checked + label:before {
+            transform: translateX(26px);
+        }
+
+        /* Fact Display */
+        .fact-container {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            min-height: 40px; /* Ensure space for fact even when empty */
+        }
+
+        /* Fish Toy */
+        #fish-toy {
+            width: 80px;
+            height: auto;
+            cursor: grab;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cat Facts!</h1>
+        <div class="toggle-container">
+            <input type="checkbox" id="mode-toggle">
+            <label for="mode-toggle"></label>
+        </div>
+        <div class="fact-container">
+            <p id="cat-fact"></p>
+        </div>
+        <img src="fish-toy.png" id="fish-toy" alt="Drag me!" draggable="true"> 
+    </div>
+    <script>
+        const catFacts = [
+            "Cats have 32 muscles in each of their ears, allowing them to rotate their ears 180 degrees!",
+            "A group of kittens is called a 'kindle,' while a group of adult cats is called a 'clowder.'",
+            "Cats can jump up to six times their height in a single bound.",
+            "The world's oldest recorded cat lived to be 38 years old!",
+            "Cats use their whiskers to help them navigate in the dark and gauge the size of openings.",
+            "A cat's purr can have therapeutic benefits, promoting healing and reducing stress.",
+            "Despite their love for napping, cats only spend about 15% of their day sleeping.",
+            "Cats have a special organ on the roof of their mouths called the 'Jacobson's organ' that allows them to 'taste' scents in the air.",
+            "The wealthiest cat in the world inherited a fortune of $6.3 million!",
+            "Unlike dogs, cats are not obligate carnivores, meaning they need some plant-based nutrients in their diet." 
+        ];
+
+        const factDisplay = document.getElementById('cat-fact');
+        const fishToy = document.getElementById('fish-toy');
+        const modeToggle = document.getElementById('mode-toggle'); 
+
+        function getRandomFact() {
+            const randomIndex = Math.floor(Math.random() * catFacts.length);
+            return catFacts[randomIndex];
+        }
+
+        function displayRandomFact() {
+            factDisplay.textContent = getRandomFact();
+        }
+
+        // Light/Dark Mode
+        modeToggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Drag Interaction
+        fishToy.addEventListener('dragend', (event) => { 
+            displayRandomFact();
+        });
+
+        // Initial Fact Display (optional)
+        displayRandomFact(); 
+    </script>
+</body>
+</html>
+
