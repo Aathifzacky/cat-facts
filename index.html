@@ -7,25 +7,30 @@
     <style>
         /* Basic Styling */
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Courier New', Courier, monospace; /* Futuristic font - you can change this! */ 
+            background: linear-gradient(to bottom, #202831, #161a20); /* Dark blue gradient */
+            color: #e0f7fa; /* Light blue text */ 
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             background-color: #f0f0f0; /* Light mode background */
-            color: #333; /* Light mode text color */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         h1 {
             font-size: 2.5em;
+            color: #bbdefb; /* Lighter blue for the heading */
+            text-shadow: 0 0 10px #81d4fa; /* Glowing effect on the heading */
             margin-bottom: 10px;
         }
 
         .container {
             text-align: center;
             padding: 20px;
-            border-radius: 10px;
+            background-color: rgba(32, 40, 49, 0.8); /* Semi-transparent container */
+            border: 3px solid #81d4fa; /* Light blue border */
+            border-radius: 15px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
@@ -88,6 +93,7 @@
             font-size: 1.4em;
             transition: opacity 0.5s ease-in-out;
             min-height: 40px; /* Ensure space for fact even when empty */
+            color: #b3e5fc;
         }
 
         .fact-container p {
@@ -156,9 +162,28 @@
             document.body.classList.toggle('dark-mode');
         });
 
+        fishToy.addEventListener('dragstart', (event) => {
+            fishToy.style.transform = "rotate(5deg)"; // Slight tilt at drag start
+        });
+        
+        fishToy.addEventListener('drag', (event) => {
+            // Add a bouncy effect while dragging
+            const bounce = Math.sin(Date.now() * 0.01) * 5; // Adjust values for desired bounce
+            fishToy.style.transform = `translateY(${bounce}px) rotate(5deg)`; 
+        });
+
         // Drag Interaction
-        fishToy.addEventListener('dragend', (event) => { 
-            displayRandomFact();
+        fishToy.addEventListener('dragend', (event) => {
+            // Smoothly return to the original position and rotation
+            fishToy.style.transition = "transform 0.3s ease"; // Add a transition
+            fishToy.style.transform = "rotate(0deg)"; // Reset rotation 
+        
+            // Remove the transition after it's done (optional, to avoid affecting other transforms)
+            setTimeout(() => {
+                fishToy.style.transition = "none"; 
+            }, 300); 
+        
+            displayRandomFact(); 
         });
 
         // Initial Fact Display (optional)
